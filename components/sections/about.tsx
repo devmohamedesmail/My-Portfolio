@@ -3,6 +3,8 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from '@/components/ui/card';
 import { Award, Briefcase, Users, Trophy } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 export function AboutSection() {
     const { t } = useTranslation();
@@ -14,6 +16,19 @@ export function AboutSection() {
         { icon: Award, label: t('about.awardsWon'), value: '10+' },
     ];
 
+    useGSAP(()=>{
+        gsap.to('.stat-card',{
+            y:-20,
+            duration:1,
+            repeat:-1,
+            yoyo:true,
+            ease:'power3.inOut',
+            stagger:{
+                each:0.2,
+                from:'center'
+            }
+        })
+    },[])
     return (
         <section id="about" className="py-20 px-4 bg-muted/30">
             <div className="container mx-auto">
@@ -43,7 +58,7 @@ export function AboutSection() {
                                 return (
                                     <Card
                                         key={index}
-                                        className="p-6 text-center hover:shadow-lg transition-shadow"
+                                        className="p-6 stat-card text-center hover:shadow-lg transition-shadow"
                                     >
                                         <Icon className="h-8 w-8 mx-auto mb-3 text-primary" />
                                         <div className="text-3xl font-bold mb-2">{stat.value}</div>
